@@ -1,0 +1,77 @@
+<svg width="720" height="480" viewBox="0 0 720 480" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="720" height="480" rx="12" fill="#f8f9fa" stroke="#e0e0e0" stroke-width="1"/>
+
+<!-- Title -->
+<text x="360" y="35" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="bold" fill="#333">致命陷阱：循环引用导致内存泄漏</text>
+
+<!-- Stack Section (Light Blue) -->
+<rect x="20" y="60" width="180" height="400" rx="10" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" stroke-dasharray="5,5"/>
+<text x="110" y="85" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#0d47a1">Stack (已销毁)</text>
+
+<!-- Dropped Variable A -->
+<g opacity="0.3">
+    <rect x="40" y="110" width="140" height="60" rx="6" fill="#ffffff" stroke="#1565c0" stroke-width="1.5"/>
+    <text x="50" y="135" font-family="monospace" font-size="12" fill="#0d47a1" font-weight="bold">var a: Rc&lt;Node&gt;</text>
+    <line x1="45" y1="115" x2="175" y2="165" stroke="#f44336" stroke-width="2"/>
+    <line x1="175" y1="115" x2="45" y2="165" stroke="#f44336" stroke-width="2"/>
+</g>
+
+<!-- Dropped Variable B -->
+<g opacity="0.3">
+    <rect x="40" y="190" width="140" height="60" rx="6" fill="#ffffff" stroke="#1565c0" stroke-width="1.5"/>
+    <text x="50" y="215" font-family="monospace" font-size="12" fill="#0d47a1" font-weight="bold">var b: Rc&lt;Node&gt;</text>
+    <line x1="45" y1="195" x2="175" y2="245" stroke="#f44336" stroke-width="2"/>
+    <line x1="175" y1="195" x2="45" y2="245" stroke="#f44336" stroke-width="2"/>
+</g>
+
+<!-- Heap Section (Light Green) -->
+<rect x="230" y="60" width="470" height="400" rx="10" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+<text x="465" y="85" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#1b5e20">Heap (无法回收的内存孤岛)</text>
+
+<!-- Node A -->
+<g transform="translate(250, 120)">
+    <rect x="0" y="0" width="180" height="210" rx="8" fill="#ffffff" stroke="#2e7d32" stroke-width="1.5"/>
+    <text x="90" y="25" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#1b5e20">Node A</text>
+    <line x1="0" y1="35" x2="180" y2="35" stroke="#2e7d32" stroke-width="1"/>
+    
+    <!-- Count -->
+    <rect x="15" y="50" width="150" height="40" rx="4" fill="#ffebee" stroke="#f44336" stroke-width="1"/>
+    <text x="25" y="75" font-family="monospace" font-size="12" fill="#d32f2f" font-weight="bold">Strong Count: 1</text>
+    
+    <text x="15" y="115" font-family="sans-serif" font-size="11" fill="#333">由 Node B 的 next 持有</text>
+    <text x="15" y="195" font-family="monospace" font-size="10" fill="#78909c">at: 0x55aa01</text>
+</g>
+
+<!-- Node B -->
+<g transform="translate(500, 120)">
+    <rect x="0" y="0" width="180" height="210" rx="8" fill="#ffffff" stroke="#2e7d32" stroke-width="1.5"/>
+    <text x="90" y="25" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#1b5e20">Node B</text>
+    <line x1="0" y1="35" x2="180" y2="35" stroke="#2e7d32" stroke-width="1"/>
+    
+    <!-- Count -->
+    <rect x="15" y="50" width="150" height="40" rx="4" fill="#ffebee" stroke="#f44336" stroke-width="1"/>
+    <text x="25" y="75" font-family="monospace" font-size="12" fill="#d32f2f" font-weight="bold">Strong Count: 1</text>
+    
+    <text x="15" y="115" font-family="sans-serif" font-size="11" fill="#333">由 Node A 的 next 持有</text>
+    <text x="15" y="195" font-family="monospace" font-size="10" fill="#78909c">at: 0x55aa02</text>
+</g>
+
+<!-- Cyclic Arrows -->
+<path d="M 430 220 L 500 220" stroke="#f44336" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+<path d="M 500 260 L 430 260" stroke="#f44336" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+
+<!-- Deadlock Logic -->
+<rect x="250" y="350" width="430" height="85" rx="6" fill="#fffde7" stroke="#fbc02d" stroke-width="1"/>
+<text x="265" y="375" font-family="sans-serif" font-size="12" fill="#f57f17" font-weight="bold">引用计数无法归零的真相：</text>
+<text x="265" y="395" font-family="sans-serif" font-size="11" fill="#333">1. 栈变量销毁时，堆上节点的计数只减到了 1（因为彼此持有）。</text>
+<text x="265" y="410" font-family="sans-serif" font-size="11" fill="#333">2. Node A 等待 Node B 销毁来释放自己，Node B 也在等待 Node A。</text>
+<text x="265" y="425" font-family="sans-serif" font-size="11" fill="#333">3. 它们互相“续命”，导致内存永远无法被操作系统回收。</text>
+
+<!-- Arrowhead -->
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" fill="#f44336" />
+</marker>
+</defs>
+
+</svg>
