@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa" rx="12"/>
+
+  <!-- Title -->
+  <text x="400" y="45" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333" text-anchor="middle">视觉解构：完全限定语法的路径定位</text>
+  <text x="400" y="70" font-family="JetBrains Mono, monospace" font-size="13" fill="#455a64" text-anchor="middle">在重叠的 Trait 实现中显式指定函数路径</text>
+
+  <!-- Section 1: Implementation Conflict (左侧) -->
+  <g transform="translate(40, 100)">
+    <rect width="340" height="200" fill="#ffffff" stroke="#e0e0e0" stroke-width="2" rx="10"/>
+    <text x="170" y="30" font-family="JetBrains Mono, monospace" font-size="15" font-weight="bold" fill="#333" text-anchor="middle">1. 实现冲突场景</text>
+    
+    <!-- Human Type -->
+    <rect x="110" y="50" width="120" height="40" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="6"/>
+    <text x="170" y="75" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#0d47a1" text-anchor="middle">struct Human</text>
+
+    <!-- Pilot Impl -->
+    <rect x="20" y="110" width="140" height="60" fill="#e8f5e9" stroke="#4caf50" stroke-width="2" rx="6"/>
+    <text x="90" y="135" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2e7d32" text-anchor="middle">impl Pilot</text>
+    <text x="90" y="155" font-family="JetBrains Mono, monospace" font-size="11" fill="#1b5e20" text-anchor="middle">fn fly(&amp;self)</text>
+
+    <!-- Wizard Impl -->
+    <rect x="180" y="110" width="140" height="60" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2" rx="6"/>
+    <text x="250" y="135" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#7b1fa2" text-anchor="middle">impl Wizard</text>
+    <text x="250" y="155" font-family="JetBrains Mono, monospace" font-size="11" fill="#4a148c" text-anchor="middle">fn fly(&amp;self)</text>
+  </g>
+
+  <!-- Section 2: Ambiguous Call (右侧) -->
+  <g transform="translate(420, 100)">
+    <rect width="340" height="200" fill="#ffffff" stroke="#e0e0e0" stroke-width="2" rx="10"/>
+    <text x="170" y="30" font-family="JetBrains Mono, monospace" font-size="15" font-weight="bold" fill="#333" text-anchor="middle">2. 模糊调用 (歧义)</text>
+    
+    <rect x="40" y="70" width="260" height="60" fill="#ffebee" stroke="#ef5350" stroke-width="2" stroke-dasharray="4,4" rx="8"/>
+    <text x="170" y="100" font-family="JetBrains Mono, monospace" font-size="18" font-weight="bold" fill="#c62828" text-anchor="middle">person.fly()</text>
+    
+    <text x="170" y="160" font-family="JetBrains Mono, monospace" font-size="12" fill="#c62828" text-anchor="middle">❌ 编译器报错：方法名存在歧义</text>
+    <text x="170" y="178" font-family="JetBrains Mono, monospace" font-size="11" fill="#455a64" text-anchor="middle">(无法推导该调用哪个 Trait 的 fly)</text>
+  </g>
+
+  <!-- Section 3: Final Solution (下方) -->
+  <g transform="translate(40, 330)">
+    <rect width="720" height="200" fill="#ffffff" stroke="#e0e0e0" stroke-width="2" rx="10"/>
+    <text x="360" y="35" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#333" text-anchor="middle">3. 最终解决方案：完全限定语法</text>
+    
+    <!-- Code Box -->
+    <rect x="60" y="60" width="600" height="60" fill="#263238" rx="8"/>
+    <text x="360" y="98" font-family="JetBrains Mono, monospace" font-size="24" fill="#ffffff" text-anchor="middle">
+      <tspan fill="#ffffff">&lt;</tspan>
+      <tspan fill="#90caf9" font-weight="bold">Human</tspan>
+      <tspan fill="#ffffff"> as </tspan>
+      <tspan fill="#a5d6a7" font-weight="bold">Pilot</tspan>
+      <tspan fill="#ffffff">&gt;::</tspan>
+      <tspan fill="#fff59d" font-weight="bold">fly</tspan>
+      <tspan fill="#ffffff">(&amp;person)</tspan>
+    </text>
+
+    <!-- Analysis Labels -->
+    <g transform="translate(130, 130)">
+      <path d="M0 0 L0 20" stroke="#1976d2" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <text x="0" y="35" font-family="JetBrains Mono, monospace" font-size="11" fill="#1976d2" text-anchor="middle">具体类型</text>
+
+      <path d="M145 0 L145 20" stroke="#388e3c" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <text x="145" y="35" font-family="JetBrains Mono, monospace" font-size="11" fill="#388e3c" text-anchor="middle">目标 Trait</text>
+
+      <path d="M265 0 L265 20" stroke="#fbc02d" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <text x="265" y="35" font-family="JetBrains Mono, monospace" font-size="11" fill="#fbc02d" text-anchor="middle">方法名</text>
+      
+      <path d="M380 0 L380 20" stroke="#455a64" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <text x="380" y="35" font-family="JetBrains Mono, monospace" font-size="11" fill="#455a64" text-anchor="middle">实例引用</text>
+    </g>
+  </g>
+
+  <!-- Summary Footer -->
+  <rect x="40" y="550" width="720" height="35" fill="#fff8e1" stroke="#ff9800" stroke-width="1" rx="6"/>
+  <text x="400" y="572" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#e65100" text-anchor="middle">核心法则：&lt;T as Trait&gt;::method(...) 明确了方法的所有权归属，消除任何调度歧义。</text>
+
+  <!-- Arrows -->
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2196f3"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ff9800"/>
+    </marker>
+  </defs>
+  <path d="M380 200 Q400 230 420 200" stroke="#b0bec5" stroke-width="2" fill="none" marker-end="url(#arrow-orange)"/>
+
+</svg>
