@@ -74,7 +74,7 @@ impl<T: Display> ToString for T {
 
 ![GATs 实战价值]( ./imgs/trait_gats.svg )
 
-### 痛点：所有权的“昂贵搬运”
+### 局限：所有权的“昂贵搬运”
 
 在没有 GATs 之前，如果你定义一个 Trait 来读取大型 Buffer，你往往只能被迫返回**所有权**（即 Clone 数据）：
 

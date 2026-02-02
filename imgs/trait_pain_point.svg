@@ -4,7 +4,7 @@
   <rect width="800" height="400" fill="#f8f9fa" rx="12"/>
   
   <!-- 标题 -->
-  <text x="400" y="40" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">痛点：没有特型时的代码冗余</text>
+  <text x="400" y="40" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">局限：没有特型时的代码冗余</text>
 
   <!-- 类型 1 的处理函数 -->
   <g transform="translate(50, 80)">
