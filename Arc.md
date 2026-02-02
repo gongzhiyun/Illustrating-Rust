@@ -23,9 +23,7 @@ fn main() {
 
 编译器会无情报错：`Rc<Vec<i32>>` cannot be sent between threads safely (`Send` trait is not implemented).
 
-<div align="center">
-<img src="imgs/arc-thread-safety-conflict.svg" alt="Rc Thread Safety Conflict" width="600" />
-</div>
+![Rc 线程安全冲突](./imgs/arc-thread-safety-conflict.svg)
 
 **痛点分析**：`Rc` 的引用计数更新是非原子的。如果两个线程同时克隆 `Rc`，可能会导致引用计数竞态，最终造成内存泄漏或提前释放（Use-after-free）。`Arc` 正是为了解决这一痛点，通过硬件级的**原子指令**（Atomic Instructions）保证了计数的线程安全性。
 
@@ -55,17 +53,13 @@ fn main() {
 }
 ```
 
-<div align="center">
-<img src="imgs/arc-shared-threads.svg" alt="Arc Shared Threads" width="600" />
-</div>
+![Arc 线程共享演示](./imgs/arc-shared-threads.svg)
 
 ## 3. 内存布局深度剖析
 
 `Arc<T>` 在内存中究竟是如何分布的？理解这一点对优化性能至关重要。
 
-<div align="center">
-<img src="imgs/arc-memory-layout.svg" alt="Arc Memory Layout" width="600" />
-</div>
+![Arc 内存布局](./imgs/arc-memory-layout.svg)
 
 **关键点解读**：
 - **双计数器**：`ArcInner` 包含 `strong` 和 `weak` 两个原子计数器。只有当 `strong` 归零时，数据 `T` 才会被析构；只有当 `strong` 和 `weak` 同时归零时，整个 `ArcInner` 内存块才会被释放。
@@ -81,9 +75,7 @@ fn main() {
 `Arc` 无法自动处理循环引用（A 指向 B，B 指向 A）。
 - **解法**：使用 `Weak<T>` 打破循环。`Weak` 不增加 `strong` 计数，不会阻止数据的销毁。
 
-<div align="center">
-<img src="imgs/arc-weak-cycle.svg" alt="Arc Weak Cycle" width="600" />
-</div>
+![Arc 弱引用打破循环](./imgs/arc-weak-cycle.svg)
 
 ## 5. 最佳实践
 
