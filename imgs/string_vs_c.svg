@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <rect width="800" height="450" fill="#f8f9fa"/>
+  <text x="400" y="40" font-family="JetBrains Mono, monospace" font-size="24" font-weight="bold" text-anchor="middle" fill="#333333">字符串索引安全性对比：Rust vs C</text>
+  
+  <!-- C Language Section -->
+  <g transform="translate(50, 80)">
+    <rect width="340" height="240" rx="10" fill="#ffffff" stroke="#78909c" stroke-width="1"/>
+    <text x="170" y="30" font-family="JetBrains Mono, monospace" font-size="18" font-weight="bold" text-anchor="middle" fill="#78909c">C Language (char*)</text>
+    
+    <g transform="translate(20, 60)">
+      <!-- Bytes -->
+      <rect x="0" y="0" width="40" height="40" fill="#fff8e1" stroke="#78909c"/>
+      <text x="20" y="25" font-family="JetBrains Mono, monospace" font-size="14" text-anchor="middle">'H'</text>
+      <rect x="40" y="0" width="40" height="40" fill="#fff8e1" stroke="#78909c"/>
+      <text x="60" y="25" font-family="JetBrains Mono, monospace" font-size="14" text-anchor="middle">'i'</text>
+      <rect x="80" y="0" width="40" height="40" fill="#ffebee" stroke="#ef5350" stroke-width="2"/>
+      <text x="100" y="25" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle" fill="#ef5350">0xF0</text>
+      <rect x="120" y="0" width="40" height="40" fill="#ffebee" stroke="#ef5350"/>
+      <text x="140" y="25" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">0x9F</text>
+      <rect x="160" y="0" width="40" height="40" fill="#f8f9fa" stroke="#78909c" stroke-dasharray="2"/>
+      <text x="180" y="25" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">...</text>
+      <rect x="200" y="0" width="40" height="40" fill="#e0e0e0" stroke="#78909c"/>
+      <text x="220" y="25" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">\0</text>
+      
+      <!-- Indexing -->
+      <path d="M 100 50 L 100 80" stroke="#ef5350" stroke-width="2" marker-end="url(#arrow-red)"/>
+      <text x="100" y="100" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle" fill="#ef5350">s[2] 直接返回 0xF0</text>
+      <text x="100" y="120" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle" fill="#78909c">(无视编码语义，可能导致乱码)</text>
+    </g>
+    
+    <text x="20" y="210" font-family="JetBrains Mono, monospace" font-size="13" fill="#333333">策略：信任程序员，按字节切分</text>
+    <text x="20" y="230" font-family="JetBrains Mono, monospace" font-size="13" fill="#ef5350">后果：逻辑错误或非法的 UTF-8 序列</text>
+  </g>
+
+  <!-- Rust Section -->
+  <g transform="translate(410, 80)">
+    <rect width="340" height="240" rx="10" fill="#ffffff" stroke="#2196f3" stroke-width="1"/>
+    <text x="170" y="30" font-family="JetBrains Mono, monospace" font-size="18" font-weight="bold" text-anchor="middle" fill="#2196f3">Rust (String/&amp;str)</text>
+    
+    <g transform="translate(20, 60)">
+      <!-- Bytes -->
+      <rect x="0" y="0" width="40" height="40" fill="#e3f2fd" stroke="#2196f3"/>
+      <text x="20" y="25" font-family="JetBrains Mono, monospace" font-size="14" text-anchor="middle">'H'</text>
+      <rect x="40" y="0" width="40" height="40" fill="#e3f2fd" stroke="#2196f3"/>
+      <text x="60" y="25" font-family="JetBrains Mono, monospace" font-size="14" text-anchor="middle">'i'</text>
+      <rect x="80" y="0" width="40" height="40" fill="#fff8e1" stroke="#ff9800" stroke-width="2"/>
+      <text x="100" y="25" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">0xF0</text>
+      <rect x="120" y="0" width="40" height="40" fill="#fff8e1" stroke="#ff9800"/>
+      <text x="140" y="25" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">0x9F</text>
+      <rect x="160" y="0" width="40" height="40" fill="#f8f9fa" stroke="#2196f3" stroke-dasharray="2"/>
+      <text x="180" y="25" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">...</text>
+      
+      <!-- Indexing Blocking -->
+      <rect x="80" y="-10" width="80" height="60" fill="none" stroke="#ef5350" stroke-width="3" rx="5"/>
+      <line x1="70" y1="50" x2="170" y2="-20" stroke="#ef5350" stroke-width="3"/>
+      
+      <path d="M 100 50 L 100 80" stroke="#ef5350" stroke-width="2" marker-end="url(#arrow-red)"/>
+      <text x="100" y="100" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle" fill="#ef5350">s[2] 禁止访问</text>
+      <text x="100" y="120" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle" fill="#78909c">(编译期拦截或运行时检查)</text>
+    </g>
+    
+    <text x="20" y="210" font-family="JetBrains Mono, monospace" font-size="13" fill="#333333">策略：编码感知，强制安全性</text>
+    <text x="20" y="230" font-family="JetBrains Mono, monospace" font-size="13" fill="#4caf50">结果：始终保证有效的 UTF-8 序列</text>
+  </g>
+
+  <!-- Comparison Summary -->
+  <g transform="translate(50, 340)">
+    <rect width="700" height="90" rx="10" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
+    <text x="20" y="30" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#9c27b0">为什么 Rust 选择了不同的道路？</text>
+    <text x="20" y="55" font-family="JetBrains Mono, monospace" font-size="13" fill="#333333">• C 语言将字符串视为单纯的字节数组，下标访问是 raw pointer 的偏移，快但危险。</text>
+    <text x="20" y="75" font-family="JetBrains Mono, monospace" font-size="13" fill="#333333">• Rust 将字符串视为 UTF-8 序列，下标访问被定义为非法操作，强制你使用 .chars() 或 .bytes()。</text>
+  </g>
+
+  <defs>
+    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#ef5350"/>
+    </marker>
+  </defs>
+</svg>
