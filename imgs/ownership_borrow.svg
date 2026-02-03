@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="450" fill="#f8f9fa"/>
+  
+  <defs>
+    <!-- Standard Markers -->
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2196f3" />
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9c27b0" />
+    </marker>
+  </defs>
+
+  <text x="400" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333">借用检查规则 (Borrow Checker)</text>
+
+  <!-- Left Side: Shared Borrowing -->
+  <g transform="translate(40, 70)">
+    <rect width="340" height="300" rx="12" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+    <text x="170" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#2196f3">场景 A: 共享借用 (Shared)</text>
+    
+    <!-- Owner -->
+    <rect x="70" y="60" width="200" height="40" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="2"/>
+    <text x="170" y="85" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#333333">data: String</text>
+    
+    <!-- Shared Borrows -->
+    <g transform="translate(30, 160)">
+      <rect x="0" y="0" width="130" height="40" rx="4" fill="#e3f2fd" stroke="#2196f3"/>
+      <text x="65" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#333333">ref1: &amp;String</text>
+      
+      <rect x="150" y="0" width="130" height="40" rx="4" fill="#e3f2fd" stroke="#2196f3"/>
+      <text x="215" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#333333">ref2: &amp;String</text>
+    </g>
+
+    <!-- Connection lines -->
+    <path d="M 95 160 L 95 140 C 95 115, 140 115, 150 105" fill="none" stroke="#2196f3" stroke-width="1.5" stroke-dasharray="2,2" marker-end="url(#arrow-blue)"/>
+    <path d="M 245 160 L 245 140 C 245 115, 200 115, 190 105" fill="none" stroke="#2196f3" stroke-width="1.5" stroke-dasharray="2,2" marker-end="url(#arrow-blue)"/>
+
+    <text x="170" y="260" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#4caf50" font-weight="bold">✔ 允许多个只读借用 (不可变)</text>
+  </g>
+
+  <!-- Right Side: Exclusive Borrowing -->
+  <g transform="translate(420, 70)">
+    <rect width="340" height="300" rx="12" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+    <text x="170" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#9c27b0">场景 B: 独占借用 (Exclusive)</text>
+    
+    <!-- Owner -->
+    <rect x="70" y="60" width="200" height="40" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="2"/>
+    <text x="170" y="85" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#333333">data: String</text>
+    
+    <!-- Mutable Borrow -->
+    <rect x="70" y="160" width="200" height="40" rx="4" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2"/>
+    <text x="170" y="185" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#9c27b0" font-weight="bold">mref: &amp;mut String</text>
+    
+    <!-- Connection line -->
+    <line x1="170" y1="160" x2="170" y2="105" stroke="#9c27b0" stroke-width="2" marker-end="url(#arrow-purple)"/>
+
+    <text x="170" y="260" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#ff9800" font-weight="bold">✔ 允许唯一可变借用 (独占)</text>
+  </g>
+
+  <!-- Bottom: Critical Rule -->
+  <g transform="translate(135, 395)">
+    <rect x="0" y="0" width="530" height="36" rx="18" fill="#ffebee" stroke="#ef5350"/>
+    <text x="265" y="23" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#ef5350">核心规则：&amp;T (多个) 与 &amp;mut T (唯一) 不可共存</text>
+  </g>
+</svg>

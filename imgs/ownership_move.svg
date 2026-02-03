@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="500" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="500" fill="#f8f9fa"/>
+  <text x="400" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" fill="#333333">所有权转移：确定性的资源管理</text>
+
+  <defs>
+    <marker id="arrowhead-blue" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2196f3" />
+    </marker>
+    <marker id="arrowhead-orange" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ff9800" />
+    </marker>
+    <marker id="arrowhead-red" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef5350" />
+    </marker>
+  </defs>
+
+  <!-- Vertical Timeline Axis -->
+  <line x1="50" y1="60" x2="50" y2="440" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="4,4"/>
+  <circle cx="50" cy="80" r="4" fill="#2196f3"/>
+  <circle cx="50" cy="220" r="4" fill="#ff9800"/>
+  <circle cx="50" cy="400" r="4" fill="#9c27b0"/>
+
+  <!-- Heap Data (Sticky on the right) -->
+  <g transform="translate(550, 180)">
+    <rect x="0" y="0" width="200" height="120" rx="10" fill="#ffffff" stroke="#4caf50" stroke-width="2"/>
+    <rect x="20" y="35" width="160" height="50" rx="5" fill="#e8f5e9" stroke="#4caf50" stroke-width="1"/>
+    <text x="100" y="65" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#333333">"Hello World"</text>
+    <text x="100" y="105" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">堆内存地址: 0x500</text>
+  </g>
+
+  <!-- Stage 1: Initialization -->
+  <g transform="translate(80, 60)">
+    <text x="0" y="0" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#2196f3">T1: 变量初始化</text>
+    <rect x="0" y="10" width="220" height="50" rx="4" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
+    <text x="110" y="40" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#333333">s1 [ptr: 0x500]</text>
+  </g>
+
+  <!-- Move Event -->
+  <line x1="190" y1="120" x2="190" y2="200" stroke="#ff9800" stroke-width="3" marker-end="url(#arrowhead-orange)"/>
+  <text x="205" y="165" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#ff9800">Move (所有权移动)</text>
+
+  <!-- Stage 2: After Move -->
+  <g transform="translate(80, 210)">
+    <text x="0" y="0" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#ff9800">T2: 赋值后状态</text>
+    <!-- s1 Invalid -->
+    <rect x="0" y="10" width="120" height="50" rx="4" fill="#f8f9fa" stroke="#ef5350" stroke-width="1" stroke-dasharray="4,2"/>
+    <text x="60" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#ef5350">s1 (已失效)</text>
+    <text x="60" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#78909c">禁止访问</text>
+    
+    <!-- s2 New Owner -->
+    <rect x="140" y="10" width="220" height="50" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="2"/>
+    <text x="250" y="40" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#333333">s2 [ptr: 0x500]</text>
+  </g>
+
+  <!-- Stage 3: Drop -->
+  <g transform="translate(80, 360)">
+    <text x="0" y="0" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#9c27b0">T3: 作用域结束</text>
+    <rect x="140" y="10" width="220" height="50" rx="4" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1" stroke-dasharray="2,2"/>
+    <text x="250" y="40" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#9c27b0">s2 (离开作用域)</text>
+  </g>
+
+  <!-- Arrows (Absolute Coordinates) -->
+  <!-- T1 Pointer (Straight line to top of heap) -->
+  <line x1="300" y1="95" x2="540" y2="197" stroke="#2196f3" stroke-width="2" marker-end="url(#arrowhead-blue)"/>
+
+  <!-- T2 Pointer (Straight line to center of heap) -->
+  <line x1="440" y1="245" x2="540" y2="240" stroke="#ff9800" stroke-width="2" marker-end="url(#arrowhead-orange)"/>
+
+  <!-- T3 Drop Line (Straight line to bottom of heap) -->
+  <line x1="440" y1="395" x2="540" y2="283" stroke="#ef5350" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrowhead-red)"/>
+  
+  <text x="560" y="325" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#ef5350">FREE (内存释放)</text>
+  <text x="450" y="345" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">调用析构函数，回收堆空间</text>
+
+  <!-- Safety Callout -->
+  <g transform="translate(450, 380)">
+    <rect x="0" y="0" width="300" height="80" rx="10" fill="#e8f5e9" stroke="#4caf50" stroke-width="1"/>
+    <text x="150" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32">内存安全保障</text>
+    <text x="20" y="55" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">● 杜绝 Double Free：s1 不再释放内存</text>
+    <text x="20" y="72" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">● 唯一所有权：同一时刻仅一个有效指针</text>
+  </g>
+</svg>
