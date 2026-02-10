@@ -4,7 +4,7 @@
   <rect width="800" height="500" fill="#f8f9fa" rx="12"/>
   
   <!-- 标题 -->
-  <text x="400" y="40" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">特型：动态分发 (Dynamic Dispatch)</text>
+  <text x="400" y="40" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">Trait：动态分发 (Dynamic Dispatch)</text>
 
   <!-- Stack 部分 -->
   <g transform="translate(50, 80)">

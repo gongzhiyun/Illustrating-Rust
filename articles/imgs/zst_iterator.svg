@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<rect width="800" height="320" fill="#f8f9fa"/>
+
+<!-- Title -->
+<text x="400" y="40" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" fill="#333333">数据 vs. 逻辑：42 到底在哪？</text>
+
+<!-- Stack (Data Area) - Pulled Left -->
+<g transform="translate(40, 80)">
+    <rect x="0" y="0" width="280" height="180" rx="10" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
+    <text x="140" y="-15" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2196f3">Stack (数据区)</text>
+    
+    <rect x="20" y="30" width="240" height="40" rx="4" fill="#ffffff" stroke="#2196f3"/>
+    <text x="35" y="55" font-family="JetBrains Mono, monospace" font-size="13" fill="#333333">let a = 10;</text>
+    
+    <line x1="20" y1="90" x2="260" y2="90" stroke="#9c27b0" stroke-width="2" stroke-dasharray="4"/>
+    <text x="140" y="115" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#9c27b0">iter (0 字节 / 幽灵)</text>
+
+    <rect x="20" y="130" width="240" height="40" rx="4" fill="#ffffff" stroke="#2196f3"/>
+    <text x="35" y="155" font-family="JetBrains Mono, monospace" font-size="13" fill="#333333">let b = 20;</text>
+</g>
+
+<!-- Code Segment (Instruction Area) - Pulled Right -->
+<g transform="translate(480, 80)">
+    <rect x="0" y="0" width="280" height="180" rx="10" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2"/>
+    <text x="140" y="-15" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#9c27b0">Code Segment (指令区)</text>
+    
+    <!-- Assembly Instruction Console -->
+    <rect x="15" y="30" width="250" height="120" rx="6" fill="#2d2d2d"/>
+    <g transform="translate(30, 60)">
+        <text y="0" font-family="JetBrains Mono, monospace" font-size="12" fill="#e0e0e0">fn next() {</text>
+        <text x="15" y="25" font-family="JetBrains Mono, monospace" font-size="12" fill="#e0e0e0">mov eax, 42</text>
+        <text x="15" y="50" font-family="JetBrains Mono, monospace" font-size="12" fill="#e0e0e0">ret</text>
+        <text y="75" font-family="JetBrains Mono, monospace" font-size="12" fill="#e0e0e0">}</text>
+        
+        <!-- Callout for 42 -->
+        <rect x="75" y="8" width="30" height="20" fill="none" stroke="#ff9800" stroke-width="1.5" rx="3"/>
+        <text x="110" y="25" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#ff9800">← 刻在这里</text>
+    </g>
+</g>
+
+<!-- Connection Arrow and Text - Repositioned -->
+<g transform="translate(320, 170)">
+    <path d="M 0 0 C 40 0, 120 -20, 160 -20" fill="none" stroke="#78909c" stroke-width="2" marker-end="url(#arrowhead)"/>
+    <text x="80" y="15" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">调用 next() 时执行</text>
+</g>
+
+<defs>
+<marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" fill="#78909c"/>
+</marker>
+</defs>
+
+</svg>

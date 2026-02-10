@@ -1,4 +1,4 @@
-# 图解 Rust (Illustrated Rust) 🦀
+# Rust 视觉化深度解析 (Illustrated Rust) 🦀
 
 > **用视觉语言拆解 Rust 的深度特性，让底层原理一眼可见。**
 
@@ -22,6 +22,7 @@
 8.  **[引用计数 Rc](./articles/Rc.md)** - 单线程共享所有权
 9.  **[原子引用计数 Arc](./articles/Arc.md)** - 多线程共享所有权
 10. **[迭代器 (Iterator)](./articles/Iterator.md)** - 零成本抽象的艺术
+11. **[Vec 迭代深度剖析 (Vec Iter)](./articles/Vec-Iter.md)** - 内存布局与转换机制
 
 ---
 

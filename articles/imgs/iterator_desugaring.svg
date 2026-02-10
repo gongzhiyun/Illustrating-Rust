@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="450" viewBox="0 0 800 450" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <rect width="800" height="450" fill="#f8f9fa"/>
+  <!-- Original Code -->
+  <rect x="50" y="40" width="300" height="120" rx="8" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
+  <text x="70" y="70" fill="#2196f3" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold">原始代码 (Sugar)</text>
+  <text x="70" y="100" fill="#333333" font-family="JetBrains Mono, monospace" font-size="14">for item in collection {</text>
+  <text x="70" y="125" fill="#333333" font-family="JetBrains Mono, monospace" font-size="14">    // 处理 item</text>
+  <text x="70" y="150" fill="#333333" font-family="JetBrains Mono, monospace" font-size="14">}</text>
+  <!-- Arrow -->
+  <path d="M 400 100 L 450 100" stroke="#9c27b0" stroke-width="4" marker-end="url(#purplearrow)"/>
+  <defs>
+    <marker id="purplearrow" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#9c27b0"/>
+    </marker>
+  </defs>
+  <text x="385" y="80" fill="#9c27b0" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold">编译脱糖</text>
+  <!-- Desugared Code -->
+  <rect x="480" y="40" width="300" height="240" rx="8" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2"/>
+  <text x="500" y="70" fill="#9c27b0" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold">底层实现 (Desugared)</text>
+  <text x="500" y="100" fill="#333333" font-family="JetBrains Mono, monospace" font-size="13">let mut iter = collection.into_iter();</text>
+  <text x="500" y="125" fill="#333333" font-family="JetBrains Mono, monospace" font-size="13">loop {</text>
+  <text x="500" y="150" fill="#333333" font-family="JetBrains Mono, monospace" font-size="13">    match iter.next() {</text>
+  <text x="500" y="175" fill="#333333" font-family="JetBrains Mono, monospace" font-size="13">        Some(item) =&gt; {</text>
+  <text x="500" y="200" fill="#333333" font-family="JetBrains Mono, monospace" font-size="13">            // 处理 item</text>
+  <text x="500" y="225" fill="#333333" font-family="JetBrains Mono, monospace" font-size="13">        }</text>
+  <text x="500" y="250" fill="#333333" font-family="JetBrains Mono, monospace" font-size="13">        None =&gt; break,</text>
+  <text x="500" y="275" fill="#333333" font-family="JetBrains Mono, monospace" font-size="13">    }</text>
+  <text x="500" y="300" fill="#333333" font-family="JetBrains Mono, monospace" font-size="13">}</text>
+  <!-- Key Points -->
+  <rect x="50" y="220" width="380" height="180" rx="8" fill="#fff8e1" stroke="#ff9800" stroke-width="2"/>
+  <text x="70" y="250" fill="#333333" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold">核心洞察：</text>
+  <text x="70" y="285" fill="#333333" font-family="JetBrains Mono, monospace" font-size="14">1. 所有权：into_iter() 消耗集合</text>
+  <text x="70" y="315" fill="#333333" font-family="JetBrains Mono, monospace" font-size="14">2. 惰性：只有调用 next() 才执行逻辑</text>
+  <text x="70" y="345" fill="#333333" font-family="JetBrains Mono, monospace" font-size="14">3. 终止：None 信号触发循环退出</text>
+  <text x="70" y="375" fill="#333333" font-family="JetBrains Mono, monospace" font-size="14">4. 优化：编译器会将此循环高度内联</text>
+</svg>

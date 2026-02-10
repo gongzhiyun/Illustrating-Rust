@@ -4,7 +4,7 @@
   <rect width="800" height="460" fill="#f8f9fa" rx="12"/>
   
   <!-- 标题 -->
-  <text x="400" y="40" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">特型：静态分发 (Monomorphization)</text>
+  <text x="400" y="40" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">Trait：静态分发 (Monomorphization)</text>
   
   <!-- 源代码部分 -->
   <g transform="translate(40, 100)">

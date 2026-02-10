@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 550" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<rect width="800" height="550" fill="#f8f9fa" />
+<text x="400" y="35" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">Vec&lt;T&gt; 到 Iter&lt;T&gt; 的转换：栈精简而堆保持不变</text>
+
+<!-- Main Container -->
+<g transform="translate(40, 70)">
+    <rect x="-10" y="-5" width="730" height="450" rx="15" fill="#fff" stroke="#e0e0e0" stroke-width="1.5" />
+    <text x="10" y="20" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#78909c">内存布局融合视图</text>
+
+    <!-- Left Column: Stack Structures -->
+    <g transform="translate(10, 45)">
+        <!-- Vec<T> Stack -->
+        <g>
+            <rect width="240" height="150" rx="8" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+            <rect width="240" height="30" rx="8" fill="#e3f2fd" />
+            <rect y="15" width="240" height="15" fill="#e3f2fd" />
+            <text x="120" y="20" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2196f3" text-anchor="middle">Stack (Vec&lt;T&gt; - 24B)</text>
+            <g transform="translate(10, 40)">
+                <rect width="220" height="30" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+                <text x="110" y="20" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">ptr (堆指针)</text>
+                <rect y="35" width="220" height="30" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+                <text x="110" y="55" font-family="JetBrains Mono, monospace" font-size="11" fill="#bdbdbd" text-anchor="middle">cap (容量)</text>
+                <rect y="70" width="220" height="30" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+                <text x="110" y="90" font-family="JetBrains Mono, monospace" font-size="11" fill="#bdbdbd" text-anchor="middle">len (长度)</text>
+            </g>
+        </g>
+
+        <!-- Transition Arrow -->
+        <g transform="translate(120, 160)">
+            <path d="M 0,0 L 0,30" fill="none" stroke="#9c27b0" stroke-width="2" marker-end="url(#arrow-purple)" />
+            <text x="10" y="20" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#9c27b0">.iter()</text>
+        </g>
+
+        <!-- Iter<T> Stack -->
+        <g transform="translate(0, 200)">
+            <rect width="240" height="180" rx="8" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+            <rect width="240" height="30" rx="8" fill="#f3e5f5" />
+            <rect y="15" width="240" height="15" fill="#f3e5f5" />
+            <text x="120" y="20" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#9c27b0" text-anchor="middle">Stack (Iter&lt;T&gt; - 16B)</text>
+            <g transform="translate(10, 40)">
+                <rect width="220" height="40" fill="#fff8e1" stroke="#ff9800" stroke-width="1" />
+                <text x="110" y="25" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">ptr (当前指针)</text>
+                <rect y="45" width="220" height="40" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+                <text x="110" y="70" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">end (哨兵指针)</text>
+                <rect y="95" width="220" height="35" rx="4" fill="#f8f9fa" stroke="#ef5350" stroke-dasharray="4" />
+                <text x="110" y="117" font-family="JetBrains Mono, monospace" font-size="10" fill="#ef5350" text-anchor="middle">Capacity 已丢弃</text>
+            </g>
+        </g>
+    </g>
+
+    <!-- Right Column: Shared Heap -->
+    <g transform="translate(450, 100)">
+        <rect width="200" height="280" rx="8" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+        <rect width="200" height="30" rx="8" fill="#e8f5e9" />
+        <rect y="15" width="200" height="15" fill="#e8f5e9" />
+        <text x="100" y="20" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#4caf50" text-anchor="middle">Heap (数据区保持不变)</text>
+        <g transform="translate(40, 60)">
+            <rect width="120" height="40" fill="#fff" stroke="#4caf50" stroke-width="1.5" />
+            <text x="60" y="25" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">T[0]</text>
+            <rect y="40" width="120" height="40" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+            <text x="60" y="65" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">T[1]</text>
+            <rect y="80" width="120" height="40" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+            <text x="60" y="105" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">T[2]</text>
+            <rect y="120" width="120" height="40" fill="#f8f9fa" stroke="#78909c" stroke-dasharray="2" />
+            <text x="60" y="145" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c" text-anchor="middle">Boundary</text>
+        </g>
+    </g>
+
+    <!-- Pointers -->
+    <!-- Vec::ptr (Stack Y: 45+40+15 = 100) -> Heap::T[0] (Heap Y: 100+60+20 = 180) -->
+    <circle cx="250" cy="100" r="3" fill="#2196f3" />
+    <path d="M 250,100 C 350,100 400,180 490,180" fill="none" stroke="#2196f3" stroke-width="2" marker-end="url(#arrow-blue)" />
+
+    <!-- Iter::ptr (Stack Y: 45+200+40+20 = 305) -> Heap::T[0] (Heap Y: 180) -->
+    <circle cx="250" cy="305" r="3" fill="#ff9800" />
+    <path d="M 250,305 C 350,305 400,180 490,180" fill="none" stroke="#ff9800" stroke-width="2" marker-end="url(#arrow-orange)" />
+
+    <!-- Iter::end (Stack Y: 45+200+45+40+25 = 355) -> Heap::Boundary (Heap Y: 100+60+140 = 300) -->
+    <circle cx="250" cy="355" r="3" fill="#78909c" />
+    <path d="M 250,355 C 350,355 400,300 490,300" fill="none" stroke="#78909c" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arrow-gray)" />
+</g>
+
+<!-- Definitions -->
+<defs>
+<marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+<path d="M0,0 L10,5 L0,10 Z" fill="#2196f3" />
+</marker>
+<marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+<path d="M0,0 L10,5 L0,10 Z" fill="#ff9800" />
+</marker>
+<marker id="arrow-purple" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+<path d="M0,0 L10,5 L0,10 Z" fill="#9c27b0" />
+</marker>
+<marker id="arrow-gray" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+<path d="M0,0 L10,5 L0,10 Z" fill="#78909c" />
+</marker>
+</defs>
+</svg>

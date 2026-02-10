@@ -1,4 +1,4 @@
-# 图解 Rust Arc： 多线程环境下的原子引用计数与共享所有权
+# Rust Arc： 多线程环境下的原子引用计数与共享所有权
 
 在 Rust 的并发世界中，`Arc<T>` (Atomic Reference Counted) 是处理多线程所有权共享的“瑞士军刀”。如果你曾因 `Rc<T>` 无法在线程间安全传递而苦恼，或者在 C++ 中因 `std::shared_ptr` 的线程安全边界模糊而踩坑，那么深入理解 `Arc` 的设计哲学将是你迈向 Rust 并发高手的必经之路。
 
@@ -62,7 +62,7 @@ fn main() {
 ![Arc 内存布局](./imgs/arc-memory-layout.svg)
 
 **关键点解读**：
-- **双计数器**：`ArcInner` 包含 `strong` 和 `weak` 两个原子计数器。只有当 `strong` 归零时，数据 `T` 才会被析构；只有当 `strong` 和 `weak` 同时归零时，整个 `ArcInner` 内存块才会被释放。
+- **双计数器**：`ArcInner` 包含 `strong` 和 `weak` 两个原子计数器。只有当 `strong` 归零时，数据 `T`才会被析构；只有当 `strong` 和 `weak` 同时归零时，整个 `ArcInner` 内存块才会被释放。
 - **内存屏障**：由于使用了原子操作（通常是 `Relaxed` 增加和 `Release/Acquire` 减少），`Arc` 在计数更新时会同步内存状态，确保线程间的数据可见性。
 
 ## 4. Arc 不是万能药

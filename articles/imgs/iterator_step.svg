@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 850" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<rect width="800" height="850" fill="#f8f9fa" />
+<text x="400" y="35" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" text-anchor="middle" fill="#333333">Iter::next() 的内存步进机制 (Stack &amp; Heap)</text>
+
+<!-- Step 1: Before next() -->
+<g transform="translate(40, 60)">
+    <!-- 面包块背景 (Step 1) -->
+    <rect x="-10" y="-5" width="730" height="270" rx="15" fill="#fff" stroke="#e0e0e0" stroke-width="1.5" />
+    <text x="10" y="20" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#78909c">Step 1: 迭代前 (ptr 指向首个元素)</text>
+    
+    <!-- Stack [Step 1] -->
+    <g transform="translate(10, 40)">
+        <rect width="240" height="210" rx="8" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+        <rect width="240" height="30" rx="8" fill="#e3f2fd" />
+        <rect y="15" width="240" height="15" fill="#e3f2fd" />
+        <text x="120" y="20" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2196f3" text-anchor="middle">Stack (Iter &apos;a, T)</text>
+        <g transform="translate(10, 80)">
+            <rect width="220" height="40" fill="#fff8e1" stroke="#ff9800" stroke-width="1" />
+            <text x="110" y="25" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">ptr (当前指针)</text>
+            <rect y="45" width="220" height="40" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+            <text x="110" y="70" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">end (哨兵指针)</text>
+        </g>
+    </g>
+    
+    <!-- Heap [Step 1] -->
+    <g transform="translate(450, 40)">
+        <rect width="200" height="210" rx="8" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+        <rect width="200" height="30" rx="8" fill="#e8f5e9" />
+        <rect y="15" width="200" height="15" fill="#e8f5e9" />
+        <text x="100" y="20" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#4caf50" text-anchor="middle">Heap (数据区)</text>
+        <g transform="translate(40, 45)">
+            <rect width="120" height="40" fill="#fff" stroke="#4caf50" stroke-width="1.5" />
+            <text x="60" y="25" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">T[0]</text>
+            <rect y="40" width="120" height="40" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+            <text x="60" y="65" font-family="JetBrains Mono, monospace" font-size="11" fill="#bdbdbd" text-anchor="middle">T[1]</text>
+            <rect y="80" width="120" height="40" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+            <text x="60" y="105" font-family="JetBrains Mono, monospace" font-size="11" fill="#bdbdbd" text-anchor="middle">T[2]</text>
+            <rect y="120" width="120" height="40" fill="#f8f9fa" stroke="#78909c" stroke-dasharray="2" />
+            <text x="60" y="145" font-family="JetBrains Mono, monospace" font-size="9" fill="#78909c" text-anchor="middle">Boundary</text>
+        </g>
+    </g>
+    
+    <!-- Pointers [Step 1] -->
+    <circle cx="240" cy="140" r="3" fill="#ff9800" />
+    <path d="M 240,140 C 340,140 390,105 490,105" fill="none" stroke="#ff9800" stroke-width="2" marker-end="url(#arrow-orange)" />
+    
+    <circle cx="240" cy="185" r="3" fill="#78909c" />
+    <path d="M 240,185 C 340,185 390,225 490,225" fill="none" stroke="#78909c" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arrow-gray)" />
+</g>
+
+<!-- Transition -->
+<g transform="translate(400, 340)">
+    <path d="M 0,0 L 0,50" fill="none" stroke="#9c27b0" stroke-width="3" marker-end="url(#arrow-purple)" />
+    <text x="15" y="30" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#9c27b0">iter.next()</text>
+</g>
+
+<!-- Step 2: After next() -->
+<g transform="translate(40, 410)">
+    <!-- 面包块背景 (Step 2) -->
+    <rect x="-10" y="-5" width="730" height="320" rx="15" fill="#fff" stroke="#e0e0e0" stroke-width="1.5" />
+    <text x="10" y="20" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#78909c">Step 2: 迭代后 (ptr 后移，返回 T[0] 引用)</text>
+    
+    <!-- Stack [Step 2] -->
+    <g transform="translate(10, 40)">
+        <rect width="240" height="210" rx="8" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+        <rect width="240" height="30" rx="8" fill="#e3f2fd" />
+        <rect y="15" width="240" height="15" fill="#e3f2fd" />
+        <text x="120" y="20" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2196f3" text-anchor="middle">Stack (Iter &amp; Return)</text>
+        <g transform="translate(10, 57.5)">
+            <rect width="220" height="40" fill="#fff8e1" stroke="#ff9800" stroke-width="1" />
+            <text x="110" y="25" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">ptr += size_of::&lt;T&gt;()</text>
+            <rect y="45" width="220" height="40" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+            <text x="110" y="70" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">end (保持不变)</text>
+            <rect y="90" width="220" height="40" rx="4" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1" />
+            <text x="110" y="115" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#9c27b0" text-anchor="middle">Return: Option&lt;&amp;T&gt;</text>
+        </g>
+    </g>
+    
+    <!-- Heap [Step 2] -->
+    <g transform="translate(450, 40)">
+        <rect width="200" height="210" rx="8" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+        <rect width="200" height="30" rx="8" fill="#e8f5e9" />
+        <rect y="15" width="200" height="15" fill="#e8f5e9" />
+        <text x="100" y="20" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#4caf50" text-anchor="middle">Heap (数据区)</text>
+        <g transform="translate(40, 45)">
+            <rect width="120" height="40" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2" />
+            <text x="60" y="25" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#9c27b0" text-anchor="middle">T[0] (已返)</text>
+            <rect y="40" width="120" height="40" fill="#fff" stroke="#4caf50" stroke-width="1.5" />
+            <text x="60" y="65" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">T[1]</text>
+            <rect y="80" width="120" height="40" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+            <text x="60" y="105" font-family="JetBrains Mono, monospace" font-size="11" fill="#bdbdbd" text-anchor="middle">T[2]</text>
+            <rect y="120" width="120" height="40" fill="#f8f9fa" stroke="#78909c" stroke-dasharray="2" />
+            <text x="60" y="145" font-family="JetBrains Mono, monospace" font-size="9" fill="#78909c" text-anchor="middle">Boundary</text>
+        </g>
+    </g>
+    
+    <!-- Pointers [Step 2] -->
+    <circle cx="240" cy="117.5" r="3" fill="#ff9800" />
+    <path d="M 240,117.5 C 340,117.5 390,145 490,145" fill="none" stroke="#ff9800" stroke-width="2" marker-end="url(#arrow-orange)" />
+    
+    <circle cx="240" cy="162.5" r="3" fill="#78909c" />
+    <path d="M 240,162.5 C 340,162.5 390,225 490,225" fill="none" stroke="#78909c" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arrow-gray)" />
+    
+    <circle cx="240" cy="207.5" r="3" fill="#9c27b0" />
+    <path d="M 240,207.5 C 340,207.5 390,105 490,105" fill="none" stroke="#9c27b0" stroke-width="2" marker-end="url(#arrow-purple)" />
+</g>
+
+<!-- Definitions -->
+<defs>
+<marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+<path d="M0,0 L10,5 L0,10 Z" fill="#ff9800" />
+</marker>
+<marker id="arrow-purple" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+<path d="M0,0 L10,5 L0,10 Z" fill="#9c27b0" />
+</marker>
+<marker id="arrow-gray" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+<path d="M0,0 L10,5 L0,10 Z" fill="#78909c" />
+</marker>
+</defs>
+
+<!-- Legend -->
+<g transform="translate(40, 750)">
+<rect width="720" height="60" rx="8" fill="#fff8e1" stroke="#ff9800" stroke-width="1" />
+<text x="360" y="25" font-family="JetBrains Mono, monospace" font-size="12" fill="#333" text-anchor="middle">
+指针算术的本质：<tspan font-weight="bold" fill="#ff9800">ptr</tspan> 指向当前元素起始地址，而 <tspan font-weight="bold" fill="#78909c">end</tspan> 指向末尾元素之后的边界。
+</text>
+<text x="360" y="45" font-family="JetBrains Mono, monospace" font-size="12" fill="#333" text-anchor="middle">
+安全性保证：当 <tspan font-weight="bold" fill="#ff9800">ptr</tspan> == <tspan font-weight="bold" fill="#78909c">end</tspan> 时，迭代结束，确保不会发生越界访问。
+</text>
+</g>
+</svg>
