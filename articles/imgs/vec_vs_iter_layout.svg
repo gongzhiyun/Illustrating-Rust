@@ -6,7 +6,6 @@
 <!-- Main Container -->
 <g transform="translate(40, 70)">
     <rect x="-10" y="-5" width="730" height="450" rx="15" fill="#fff" stroke="#e0e0e0" stroke-width="1.5" />
-    <text x="10" y="20" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#78909c">内存布局融合视图</text>
 
     <!-- Left Column: Stack Structures -->
     <g transform="translate(10, 45)">
