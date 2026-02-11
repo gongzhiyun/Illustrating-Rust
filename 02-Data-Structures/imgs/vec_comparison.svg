@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="740" viewBox="0 0 800 740" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+    <!-- Background Gradient -->
+    <defs>
+        <linearGradient id="bgGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#f8f9fa;stop-opacity:1" />
+        </linearGradient>
+        <filter id="dropShadow" x="-5%" y="-5%" width="110%" height="110%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+            <feOffset dx="1" dy="2" result="offsetblur" />
+            <feComponentTransfer>
+                <feFuncA type="linear" slope="0.1" />
+            </feComponentTransfer>
+            <feMerge>
+                <feMergeNode />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#ff9800" />
+        </marker>
+    </defs>
+    
+    <rect width="800" height="740" fill="url(#bgGradient)" />
+    
+    <!-- Header -->
+    <text x="400" y="45" font-family="JetBrains Mono, monospace" font-size="24" font-weight="bold" text-anchor="middle" fill="#2c3e50">Collection Memory Comparison</text>
+    <line x1="320" y1="55" x2="480" y2="55" stroke="#ff9800" stroke-width="3" />
+
+    <!-- 1. Array [T; 3] -->
+    <g transform="translate(60, 100)">
+        <text x="0" y="0" font-family="JetBrains Mono, monospace" font-size="15" font-weight="bold" fill="#333">[T; 3] (Fixed-size Array)</text>
+        <g transform="translate(0, 20)">
+            <rect width="220" height="60" rx="4" fill="white" filter="url(#dropShadow)" stroke="#2196f3" stroke-width="1.5" />
+            <g transform="translate(0, 0)">
+                <rect width="73.3" height="60" fill="#e3f2fd" stroke="#2196f3" stroke-width="1" />
+                <text x="36.6" y="35" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#1976d2" text-anchor="middle">T</text>
+                <rect x="73.3" width="73.3" height="60" fill="#e3f2fd" stroke="#2196f3" stroke-width="1" />
+                <text x="110" y="35" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#1976d2" text-anchor="middle">T</text>
+                <rect x="146.6" width="73.4" height="60" fill="#e3f2fd" stroke="#2196f3" stroke-width="1" />
+                <text x="183.3" y="35" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#1976d2" text-anchor="middle">T</text>
+            </g>
+            <text x="235" y="35" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">Stack Only</text>
+        </g>
+    </g>
+
+    <!-- 2. Box<[T]> -->
+    <g transform="translate(60, 240)">
+        <text x="0" y="0" font-family="JetBrains Mono, monospace" font-size="15" font-weight="bold" fill="#333">Box&lt;[T]&gt; (Fixed-size Heap Slice)</text>
+        <g transform="translate(0, 20)">
+            <!-- Stack -->
+            <rect width="220" height="100" rx="4" fill="white" filter="url(#dropShadow)" stroke="#ecf0f1" />
+            <rect width="220" height="50" fill="#fffde7" stroke="#fbc02d" stroke-width="2" />
+            <text x="15" y="30" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#455a64">ptr</text>
+            <text x="205" y="30" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#fbc02d" text-anchor="end">0x1000</text>
+            <rect y="50" width="220" height="50" fill="#e8f5e9" stroke="#4caf50" stroke-width="2" />
+            <text x="15" y="80" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#455a64">len</text>
+            <text x="205" y="80" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#2e7d32" text-anchor="end">3</text>
+            
+            <!-- Heap -->
+            <g transform="translate(420, 0)">
+                <rect width="280" height="100" rx="8" fill="white" filter="url(#dropShadow)" stroke="#ecf0f1" />
+                <g transform="translate(15, 20)">
+                    <rect width="80" height="60" rx="4" fill="#fff" stroke="#4caf50" stroke-width="2" />
+                    <text x="40" y="35" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#2e7d32" text-anchor="middle">T</text>
+                    <rect x="85" width="80" height="60" rx="4" fill="#fff" stroke="#4caf50" stroke-width="2" />
+                    <text x="125" y="35" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#2e7d32" text-anchor="middle">T</text>
+                    <rect x="170" width="80" height="60" rx="4" fill="#fff" stroke="#4caf50" stroke-width="2" />
+                    <text x="210" y="35" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#2e7d32" text-anchor="middle">T</text>
+                </g>
+            </g>
+            
+            <path d="M 220,25 C 280,25 350,50 420,50" fill="none" stroke="#ff9800" stroke-width="2.5" marker-end="url(#arrowhead)" />
+            <circle cx="220" cy="25" r="4" fill="#fbc02d" />
+        </g>
+    </g>
+
+    <!-- 3. Vec<T> -->
+    <g transform="translate(60, 430)">
+        <text x="0" y="0" font-family="JetBrains Mono, monospace" font-size="15" font-weight="bold" fill="#333">Vec&lt;T&gt; (Dynamic Vector)</text>
+        <g transform="translate(0, 20)">
+            <!-- Stack -->
+            <rect width="220" height="150" rx="4" fill="white" filter="url(#dropShadow)" stroke="#ecf0f1" />
+            <rect width="220" height="50" fill="#fffde7" stroke="#fbc02d" stroke-width="2" />
+            <text x="15" y="30" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#455a64">ptr</text>
+            <text x="205" y="30" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#fbc02d" text-anchor="end">0x2000</text>
+            <rect y="50" width="220" height="50" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2" />
+            <text x="15" y="80" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#455a64">cap</text>
+            <text x="205" y="80" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#7b1fa2" text-anchor="end">5</text>
+            <rect y="100" width="220" height="50" fill="#e8f5e9" stroke="#4caf50" stroke-width="2" />
+            <text x="15" y="130" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#455a64">len</text>
+            <text x="205" y="130" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#2e7d32" text-anchor="end">3</text>
+            
+            <!-- Heap -->
+            <g transform="translate(420, 0)">
+                <rect width="280" height="150" rx="8" fill="white" filter="url(#dropShadow)" stroke="#ecf0f1" />
+                <g transform="translate(15, 45)">
+                    <rect width="50" height="60" rx="4" fill="#fff" stroke="#4caf50" stroke-width="2" />
+                    <text x="25" y="35" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#2e7d32" text-anchor="middle">T</text>
+                    <rect x="52" width="50" height="60" rx="4" fill="#fff" stroke="#4caf50" stroke-width="2" />
+                    <text x="77" y="35" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#2e7d32" text-anchor="middle">T</text>
+                    <rect x="104" width="50" height="60" rx="4" fill="#fff" stroke="#4caf50" stroke-width="2" />
+                    <text x="129" y="35" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#2e7d32" text-anchor="middle">T</text>
+                    
+                    <rect x="158" width="45" height="60" rx="4" fill="#f1f8e9" stroke="#cfd8dc" stroke-dasharray="3,3" />
+                    <text x="180.5" y="35" font-family="JetBrains Mono, monospace" font-size="9" fill="#90a4ae" text-anchor="middle">Free</text>
+                    <rect x="205" width="45" height="60" rx="4" fill="#f1f8e9" stroke="#cfd8dc" stroke-dasharray="3,3" />
+                    <text x="227.5" y="35" font-family="JetBrains Mono, monospace" font-size="9" fill="#90a4ae" text-anchor="middle">Free</text>
+                </g>
+                <text x="140" y="130" font-family="JetBrains Mono, monospace" font-size="10" fill="#7f8c8d" text-anchor="middle">Capacity: 5 elements</text>
+            </g>
+            
+            <path d="M 220,25 C 280,25 350,75 420,75" fill="none" stroke="#ff9800" stroke-width="2.5" marker-end="url(#arrowhead)" />
+            <circle cx="220" cy="25" r="4" fill="#fbc02d" />
+        </g>
+    </g>
+</svg>

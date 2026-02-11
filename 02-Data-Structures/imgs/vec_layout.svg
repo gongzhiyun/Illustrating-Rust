@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="520" viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+    <!-- Background Gradient -->
+    <defs>
+        <linearGradient id="bgGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#f8f9fa;stop-opacity:1" />
+        </linearGradient>
+        <filter id="dropShadow" x="-5%" y="-5%" width="110%" height="110%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+            <feOffset dx="1" dy="2" result="offsetblur" />
+            <feComponentTransfer>
+                <feFuncA type="linear" slope="0.1" />
+            </feComponentTransfer>
+            <feMerge>
+                <feMergeNode />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#ff9800" />
+        </marker>
+    </defs>
+    
+    <rect width="800" height="520" fill="url(#bgGradient)" />
+    
+    <!-- Header -->
+    <text x="400" y="45" font-family="JetBrains Mono, monospace" font-size="24" font-weight="bold" text-anchor="middle" fill="#2c3e50">Vec&lt;T&gt; Memory Layout</text>
+    <line x1="360" y1="55" x2="440" y2="55" stroke="#ff9800" stroke-width="3" />
+
+    <!-- Column Headers -->
+    <g transform="translate(200, 110)">
+        <rect x="-70" y="-30" width="140" height="30" rx="15" fill="#e3f2fd" stroke="#2196f3" stroke-width="1.5" />
+        <text y="-10" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#1976d2" text-anchor="middle">STACK</text>
+    </g>
+    <g transform="translate(600, 110)">
+        <rect x="-70" y="-30" width="140" height="30" rx="15" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5" />
+        <text y="-10" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#2e7d32" text-anchor="middle">HEAP</text>
+    </g>
+
+    <!-- Stack Visualizer -->
+    <g transform="translate(60, 140)">
+        <!-- Address Axis -->
+        <path d="M 15,0 L 15,320" fill="none" stroke="#bdc3c7" stroke-width="1" stroke-dasharray="4,2" />
+        <text x="10" y="15" font-family="JetBrains Mono, monospace" font-size="9" fill="#95a5a6" text-anchor="end" transform="rotate(-90, 10, 15)">High</text>
+        <text x="10" y="310" font-family="JetBrains Mono, monospace" font-size="9" fill="#95a5a6" text-anchor="end" transform="rotate(-90, 10, 310)">Low</text>
+
+        <g transform="translate(40, 10)">
+            <rect width="220" height="320" rx="4" fill="white" filter="url(#dropShadow)" stroke="#ecf0f1" />
+            
+            <!-- Others section -->
+            <rect width="220" height="40" fill="#fcfcfc" stroke="#ecf0f1" />
+            <text x="110" y="25" font-family="JetBrains Mono, monospace" font-size="11" fill="#bdc3c7" text-anchor="middle">Local Variables</text>
+
+            <!-- Vec Metadata -->
+            <g transform="translate(0, 40)">
+                <rect width="220" height="50" fill="#fffde7" stroke="#fbc02d" stroke-width="2" />
+                <text x="15" y="30" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#455a64">ptr</text>
+                <text x="205" y="30" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#fbc02d" text-anchor="end">0x1000</text>
+                
+                <rect y="50" width="220" height="50" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2" />
+                <text x="15" y="80" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#455a64">cap</text>
+                <text x="205" y="80" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#7b1fa2" text-anchor="end">5</text>
+                
+                <rect y="100" width="220" height="50" fill="#e8f5e9" stroke="#4caf50" stroke-width="2" />
+                <text x="15" y="130" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#455a64">len</text>
+                <text x="205" y="130" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32" text-anchor="end">3</text>
+            </g>
+
+            <!-- Byte Offsets -->
+            <g font-family="JetBrains Mono, monospace" font-size="9" fill="#95a5a6">
+                <text x="-5" y="65">+0</text>
+                <text x="-5" y="115">+8</text>
+                <text x="-5" y="165">+16</text>
+            </g>
+
+            <!-- Vertical Label -->
+            <text x="235" y="115" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2196f3" transform="rotate(90, 235, 115)" text-anchor="middle">Vec&lt;T&gt;</text>
+            
+            <rect y="190" width="220" height="130" fill="#fcfcfc" stroke="#ecf0f1" />
+            <text x="110" y="255" font-family="JetBrains Mono, monospace" font-size="11" fill="#bdc3c7" text-anchor="middle">Stack Padding</text>
+        </g>
+    </g>
+
+    <!-- Heap Visualizer -->
+    <g transform="translate(460, 140)">
+        <rect width="300" height="320" rx="8" fill="white" filter="url(#dropShadow)" stroke="#ecf0f1" />
+        
+        <g transform="translate(15, 65)">
+            <text x="135" y="-35" font-family="JetBrains Mono, monospace" font-size="11" fill="#7f8c8d" font-weight="bold" text-anchor="middle">Heap Allocation (0x1000)</text>
+            
+            <g>
+                <rect width="90" height="60" rx="4" fill="#fff" stroke="#4caf50" stroke-width="2" />
+                <text x="45" y="35" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32" text-anchor="middle">T[0]</text>
+                
+                <rect x="90" width="90" height="60" rx="4" fill="#fff" stroke="#4caf50" stroke-width="2" />
+                <text x="135" y="35" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32" text-anchor="middle">T[1]</text>
+                
+                <rect x="180" width="90" height="60" rx="4" fill="#fff" stroke="#4caf50" stroke-width="2" />
+                <text x="225" y="35" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32" text-anchor="middle">T[2]</text>
+                
+                <path d="M 0,-10 L 0,-18 L 270,-18 L 270,-10" fill="none" stroke="#4caf50" stroke-width="1.5" />
+                <text x="135" y="-22" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#4caf50" text-anchor="middle">len=3</text>
+
+                <g transform="translate(0, 80)">
+                    <rect width="135" height="40" rx="4" fill="#f1f8e9" stroke="#cfd8dc" stroke-dasharray="3,3" />
+                    <text x="67.5" y="25" font-family="JetBrains Mono, monospace" font-size="10" fill="#90a4ae" text-anchor="middle">Free</text>
+                    
+                    <rect x="135" width="135" height="40" rx="4" fill="#f1f8e9" stroke="#cfd8dc" stroke-dasharray="3,3" />
+                    <text x="202.5" y="25" font-family="JetBrains Mono, monospace" font-size="10" fill="#90a4ae" text-anchor="middle">Free</text>
+                </g>
+                
+                <path d="M 0,130 L 0,138 L 270,138 L 270,130" fill="none" stroke="#9c27b0" stroke-width="1.5" />
+                <text x="135" y="152" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#9c27b0" text-anchor="middle">cap=5</text>
+            </g>
+            
+            <rect y="185" width="270" height="50" rx="6" fill="#f8f9fa" stroke="#cfd8dc" />
+            <text x="135" y="215" font-family="JetBrains Mono, monospace" font-size="11" fill="#7f8c8d" text-anchor="middle">Continuous Memory Block</text>
+        </g>
+    </g>
+    
+    <!-- Connection -->
+    <path d="M 320,215 C 360,215 410,230 460,230" fill="none" stroke="#ff9800" stroke-width="2.5" marker-end="url(#arrowhead)" />
+    <circle cx="320" cy="215" r="4" fill="#fbc02d" />
+</svg>
