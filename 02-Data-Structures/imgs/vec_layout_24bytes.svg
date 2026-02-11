@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="300" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<rect width="600" height="300" fill="#f8f9fa"/>
+<text x="30" y="40" font-family="JetBrains Mono, monospace" font-size="18" font-weight="bold" fill="#333333">Vec&lt;u8&gt; 内存布局 (64-bit)</text>
+<!-- Stack Area -->
+<rect x="30" y="70" width="180" height="180" rx="8" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
+<text x="40" y="95" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2196f3">Stack (24 Bytes)</text>
+<!-- Ptr -->
+<rect x="40" y="110" width="160" height="40" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="1"/>
+<text x="50" y="135" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">ptr: 0x55A0...</text>
+<!-- Cap -->
+<rect x="40" y="160" width="160" height="40" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+<text x="50" y="185" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">cap: 4</text>
+<!-- Len -->
+<rect x="40" y="210" width="160" height="40" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+<text x="50" y="235" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">len: 2</text>
+<!-- Heap Area -->
+<rect x="300" y="110" width="260" height="60" rx="8" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+<text x="310" y="95" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#4caf50">Heap (Data Buffer)</text>
+<!-- Elements -->
+<rect x="310" y="120" width="40" height="40" fill="#ffffff" stroke="#4caf50" stroke-width="1"/>
+<text x="325" y="145" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">1</text>
+<rect x="350" y="120" width="40" height="40" fill="#ffffff" stroke="#4caf50" stroke-width="1"/>
+<text x="365" y="145" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">2</text>
+<rect x="390" y="120" width="40" height="40" fill="#ffffff" stroke="#cccccc" stroke-dasharray="4" stroke-width="1"/>
+<text x="395" y="145" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">uninit</text>
+<rect x="430" y="120" width="40" height="40" fill="#ffffff" stroke="#cccccc" stroke-dasharray="4" stroke-width="1"/>
+<text x="435" y="145" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">uninit</text>
+<!-- Pointer Arrow -->
+<path d="M 200 130 L 300 130" stroke="#ff9800" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+<defs>
+<marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" fill="#ff9800"/>
+</marker>
+</defs>
+<!-- Labels -->
+<text x="30" y="280" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">64位环境下，Vec 在栈上始终占 24 字节</text>
+</svg>

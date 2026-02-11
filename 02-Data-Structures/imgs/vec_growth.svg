@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<rect width="600" height="400" fill="#f8f9fa"/>
+<text x="30" y="40" font-family="JetBrains Mono, monospace" font-size="18" font-weight="bold" fill="#333333">Vec 动态扩容过程 (Growth Strategy)</text>
+<!-- Phase 1: Full -->
+<text x="30" y="75" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#78909c">1. 触发扩容 (len == cap)</text>
+<rect x="30" y="90" width="100" height="40" rx="4" fill="#e3f2fd" stroke="#2196f3" stroke-width="1"/>
+<text x="40" y="115" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">cap: 2, len: 2</text>
+<rect x="150" y="90" width="80" height="40" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1"/>
+<text x="160" y="115" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">[A, B]</text>
+<text x="250" y="115" font-family="JetBrains Mono, monospace" font-size="12" fill="#ef5350">push(C) -> 空间不足!</text>
+<!-- Phase 2: Reallocation -->
+<text x="30" y="175" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#78909c">2. 申请新空间并拷贝 (Realloc &amp; Copy)</text>
+<rect x="30" y="190" width="100" height="40" rx="4" fill="#e3f2fd" stroke="#2196f3" stroke-width="1"/>
+<text x="40" y="215" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">cap: 4, len: 3</text>
+<path d="M 230 110 Q 300 150 350 200" stroke="#ff9800" stroke-width="2" fill="none" stroke-dasharray="4" marker-end="url(#arrowhead)"/>
+<!-- New Heap -->
+<rect x="350" y="190" width="160" height="40" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+<text x="360" y="215" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">[A, B, C, _]</text>
+<!-- Phase 3: Free Old -->
+<text x="30" y="275" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#78909c">3. 释放旧内存 (Free Old Buffer)</text>
+<rect x="150" y="290" width="80" height="40" rx="4" fill="#ffebee" stroke="#ef5350" stroke-width="1" stroke-dasharray="2"/>
+<text x="160" y="315" font-family="JetBrains Mono, monospace" font-size="12" fill="#ef5350" style="text-decoration: line-through;">[A, B]</text>
+<text x="250" y="315" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">已回收</text>
+<defs>
+<marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" fill="#ff9800"/>
+</marker>
+</defs>
+<text x="30" y="370" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">Rust 使用位拷贝 (memcpy) 移动数据，保证高效扩容</text>
+</svg>

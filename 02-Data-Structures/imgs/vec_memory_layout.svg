@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<rect width="800" height="400" fill="#f8f9fa"/>
+<text x="400" y="40" font-family="JetBrains Mono, monospace" font-size="24" font-weight="bold" fill="#333" text-anchor="middle">Vec&lt;u8&gt; 内存布局 (Capacity=4, Len=2)</text>
+<!-- Stack Section -->
+<g transform="translate(50, 100)">
+<text x="0" y="-15" font-family="JetBrains Mono, monospace" font-size="18" font-weight="bold" fill="#2196f3">Stack (栈)</text>
+<rect x="0" y="0" width="200" height="180" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
+<!-- ptr -->
+<rect x="10" y="10" width="180" height="50" fill="#fff" stroke="#2196f3" stroke-width="1"/>
+<text x="100" y="32" font-family="JetBrains Mono, monospace" font-size="14" fill="#333" text-anchor="middle">ptr (数据指针)</text>
+<text x="100" y="52" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#ff9800" text-anchor="middle">0x55aa</text>
+<!-- cap -->
+<rect x="10" y="65" width="180" height="50" fill="#fff" stroke="#2196f3" stroke-width="1"/>
+<text x="100" y="87" font-family="JetBrains Mono, monospace" font-size="14" fill="#333" text-anchor="middle">cap (物理容量)</text>
+<text x="100" y="107" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2196f3" text-anchor="middle">4</text>
+<!-- len -->
+<rect x="10" y="120" width="180" height="50" fill="#fff" stroke="#2196f3" stroke-width="1"/>
+<text x="100" y="142" font-family="JetBrains Mono, monospace" font-size="14" fill="#333" text-anchor="middle">len (有效长度)</text>
+<text x="100" y="162" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2196f3" text-anchor="middle">2</text>
+<text x="100" y="195" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">总计: 24 Bytes</text>
+</g>
+<!-- Heap Section -->
+<g transform="translate(450, 100)">
+<text x="0" y="-15" font-family="JetBrains Mono, monospace" font-size="18" font-weight="bold" fill="#4caf50">Heap (堆)</text>
+<text x="0" y="20" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">地址: 0x55aa</text>
+<g transform="translate(0, 30)">
+<!-- Element 0 -->
+<rect x="0" y="0" width="60" height="80" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+<text x="30" y="30" font-family="JetBrains Mono, monospace" font-size="14" fill="#333" text-anchor="middle">[0]</text>
+<text x="30" y="60" font-family="JetBrains Mono, monospace" font-size="18" font-weight="bold" fill="#4caf50" text-anchor="middle">10</text>
+<!-- Element 1 -->
+<rect x="60" y="0" width="60" height="80" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+<text x="90" y="30" font-family="JetBrains Mono, monospace" font-size="14" fill="#333" text-anchor="middle">[1]</text>
+<text x="90" y="60" font-family="JetBrains Mono, monospace" font-size="18" font-weight="bold" fill="#4caf50" text-anchor="middle">20</text>
+<!-- Element 2 (Reserved) -->
+<rect x="120" y="0" width="60" height="80" fill="#eeeeee" stroke="#bdbdbd" stroke-width="2" stroke-dasharray="4"/>
+<text x="150" y="30" font-family="JetBrains Mono, monospace" font-size="14" fill="#78909c" text-anchor="middle">[2]</text>
+<text x="150" y="60" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">未初始化</text>
+<!-- Element 3 (Reserved) -->
+<rect x="180" y="0" width="60" height="80" fill="#eeeeee" stroke="#bdbdbd" stroke-width="2" stroke-dasharray="4"/>
+<text x="210" y="30" font-family="JetBrains Mono, monospace" font-size="14" fill="#78909c" text-anchor="middle">[3]</text>
+<text x="210" y="60" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">未初始化</text>
+</g>
+<text x="120" y="130" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">物理分配: 4 * size_of::&lt;u8&gt;()</text>
+</g>
+<!-- Pointer Arrow -->
+<path d="M 240 135 L 440 135" fill="none" stroke="#ff9800" stroke-width="3" marker-end="url(#arrowhead)"/>
+<defs>
+<marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" fill="#ff9800"/>
+</marker>
+</defs>
+<text x="340" y="125" font-family="JetBrains Mono, monospace" font-size="14" fill="#ff9800" text-anchor="middle">指向堆首地址</text>
+</svg>
