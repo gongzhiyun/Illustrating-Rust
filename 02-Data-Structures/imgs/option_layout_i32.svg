@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+    <!-- Background -->
+    <rect width="600" height="300" fill="#f8f9fa" />
+    
+    <!-- Title -->
+    <text x="300" y="35" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333" text-anchor="middle">Option&lt;i32&gt; 内存布局 (Tagged Union)</text>
+    
+    <!-- Stack Area -->
+    <g transform="translate(50, 70)">
+        <rect width="500" height="180" rx="15" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" />
+        
+        <!-- Header -->
+        <path d="M0 12 A12 12 0 0 1 12 0 H488 A12 12 0 0 1 500 12 V35 H0 Z" fill="#e3f2fd" />
+        <text x="250" y="23" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack (8 Bytes)</text>
+        
+        <!-- Some(42) Case -->
+        <g transform="translate(20, 50)">
+            <text x="0" y="-5" font-family="JetBrains Mono, monospace" font-size="12" fill="#666">Case: Some(42)</text>
+            <rect width="220" height="40" rx="8" fill="#ffffff" stroke="#ef5350" stroke-width="2" />
+            <!-- Tag -->
+            <rect x="0" width="110" height="40" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1" />
+            <text x="55" y="25" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">Tag: 1 (Some)</text>
+            <!-- Data -->
+            <rect x="110" width="110" height="40" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="1" />
+            <text x="165" y="25" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">Data: 42</text>
+        </g>
+        
+        <!-- None Case -->
+        <g transform="translate(260, 50)">
+            <text x="0" y="-5" font-family="JetBrains Mono, monospace" font-size="12" fill="#666">Case: None</text>
+            <rect width="220" height="40" rx="8" fill="#ffffff" stroke="#ef5350" stroke-width="2" />
+            <!-- Tag -->
+            <rect x="0" width="110" height="40" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1" />
+            <text x="55" y="25" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">Tag: 0 (None)</text>
+            <!-- Padding -->
+            <rect x="110" width="110" height="40" rx="4" fill="#f5f5f5" stroke="#e0e0e0" stroke-dasharray="4 2" />
+            <text x="165" y="25" font-family="JetBrains Mono, monospace" font-size="11" fill="#999" text-anchor="middle">Padding/Invalid</text>
+        </g>
+        
+        <!-- Byte Scale -->
+        <g transform="translate(20, 130)">
+            <line x1="0" y1="10" x2="460" y2="10" stroke="#78909c" stroke-width="1" />
+            <path d="M0 5 V15 M230 5 V15 M460 5 V15" stroke="#78909c" stroke-width="1" />
+            <text x="115" y="25" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c" text-anchor="middle">4 Bytes (Tag)</text>
+            <text x="345" y="25" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c" text-anchor="middle">4 Bytes (Data/Padding)</text>
+        </g>
+    </g>
+</svg>

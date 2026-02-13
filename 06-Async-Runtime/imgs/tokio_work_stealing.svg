@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+    <!-- Background -->
+    <rect width="800" height="500" rx="15" fill="#f8f9fa"/>
+    
+    <!-- Title -->
+    <text x="400" y="40" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333" text-anchor="middle">Tokio Work-Stealing 调度模型</text>
+
+    <!-- Global Queue -->
+    <rect x="250" y="70" width="300" height="60" rx="12" fill="#fff8e1" stroke="#ff9800" stroke-width="2"/>
+    <text x="400" y="105" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#f57c00" text-anchor="middle">Global Queue (全局队列)</text>
+    <text x="400" y="120" font-family="JetBrains Mono, monospace" font-size="10" fill="#f57c00" text-anchor="middle">共享任务池</text>
+
+    <!-- Worker A -->
+    <rect x="50" y="180" width="320" height="280" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="2"/>
+    <text x="210" y="205" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#333333" text-anchor="middle">Worker Thread A</text>
+    
+    <!-- Worker A LIFO Slot -->
+    <rect x="80" y="220" width="260" height="40" rx="8" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+    <text x="210" y="245" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#1565c0" text-anchor="middle">LIFO Slot (最新任务 - 热缓存)</text>
+    
+    <!-- Worker A Local Queue -->
+    <rect x="80" y="280" width="260" height="150" rx="8" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2"/>
+    <text x="210" y="305" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#6a1b9a" text-anchor="middle">Local Queue (Ring Buffer)</text>
+    <!-- Task Slots in A -->
+    <rect x="100" y="320" width="40" height="40" rx="4" fill="#ffffff" stroke="#ab47bc"/>
+    <text x="120" y="345" font-family="JetBrains Mono, monospace" font-size="10" fill="#6a1b9a" text-anchor="middle">T1</text>
+    <rect x="150" y="320" width="40" height="40" rx="4" fill="#ffffff" stroke="#ab47bc"/>
+    <text x="170" y="345" font-family="JetBrains Mono, monospace" font-size="10" fill="#6a1b9a" text-anchor="middle">T2</text>
+    <rect x="200" y="320" width="40" height="40" rx="4" fill="#ffffff" stroke="#ab47bc"/>
+    <text x="220" y="345" font-family="JetBrains Mono, monospace" font-size="10" fill="#6a1b9a" text-anchor="middle">T3</text>
+    <rect x="250" y="320" width="40" height="40" rx="4" fill="#ffffff" stroke="#ab47bc" stroke-dasharray="4 2"/>
+    <text x="270" y="345" font-family="JetBrains Mono, monospace" font-size="10" fill="#6a1b9a" text-anchor="middle">...</text>
+
+    <!-- Worker B -->
+    <rect x="430" y="180" width="320" height="280" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="2"/>
+    <text x="590" y="205" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#333333" text-anchor="middle">Worker Thread B (Idle)</text>
+    
+    <!-- Worker B LIFO Slot (Empty) -->
+    <rect x="460" y="220" width="260" height="40" rx="8" fill="#f5f5f5" stroke="#bdbdbd" stroke-dasharray="4 2"/>
+    <text x="590" y="245" font-family="JetBrains Mono, monospace" font-size="11" fill="#9e9e9e" text-anchor="middle">LIFO Slot (Empty)</text>
+    
+    <!-- Worker B Local Queue (Empty) -->
+    <rect x="460" y="280" width="260" height="150" rx="8" fill="#f5f5f5" stroke="#bdbdbd" stroke-dasharray="4 2"/>
+    <text x="590" y="305" font-family="JetBrains Mono, monospace" font-size="11" fill="#9e9e9e" text-anchor="middle">Local Queue (Empty)</text>
+
+    <!-- Stealing Arrow -->
+    <path d="M 450 340 L 300 340" stroke="#f44336" stroke-width="3" stroke-dasharray="8 4" marker-end="url(#stealArrow)"/>
+    <text x="375" y="330" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#d32f2f" text-anchor="middle">STEAL! (偷走一半任务)</text>
+
+    <!-- Global Dispatch Arrows -->
+    <path d="M 400 130 L 210 180" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="4 2" marker-end="url(#globalArrow)"/>
+    <path d="M 400 130 L 590 180" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="4 2" marker-end="url(#globalArrow)"/>
+
+    <!-- Markers -->
+    <defs>
+        <marker id="stealArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="10 3.5, 0 0, 0 7" fill="#f44336" />
+        </marker>
+        <marker id="globalArrow" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+            <polygon points="8 2.5, 0 0, 0 5" fill="#ff9800" />
+        </marker>
+    </defs>
+</svg>

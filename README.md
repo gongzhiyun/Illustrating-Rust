@@ -18,6 +18,7 @@
 
 ### 02 数据结构 (Data Structures)
 - **[结构体 (Struct)](./02-Data-Structures/Struct.md)** - 内存布局与对齐
+- **[元组 (Tuple)](./02-Data-Structures/Tuple.md)** - 匿名的内存严谨结构
 - **[字符串 (String)](./02-Data-Structures/String.md)** - 彻底搞懂 String 与 &str
 - **[向量 (Vec)](./02-Data-Structures/Vec.md)** - 动态数组的扩容机制
 - **[双端队列 (VecDeque)](./02-Data-Structures/VecDeque.md)** - 跨越物理边界的环形缓冲区

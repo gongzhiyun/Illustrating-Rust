@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="560" viewBox="0 0 800 560" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+    <defs>
+        <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 Z" fill="#ff9800" />
+        </marker>
+        <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 Z" fill="#2196f3" />
+        </marker>
+        <filter id="dropShadow" x="-5%" y="-5%" width="110%" height="110%">
+            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.05"/>
+        </filter>
+    </defs>
+
+    <!-- Canvas Background -->
+    <rect width="800" height="560" fill="#f8f9fa" />
+
+    <!-- Title -->
+    <text x="400" y="45" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333" text-anchor="middle">引用的内存结构</text>
+
+    <!-- Main Content Group -->
+    <g transform="translate(40, 80)">
+        
+        <!-- Stack Section (Left) -->
+        <g transform="translate(0, 0)">
+            <rect width="340" height="440" rx="15" fill="#ffffff" stroke="#e0e0e0" stroke-width="1.5" filter="url(#dropShadow)" />
+            <path d="M0,15 Q0,0 15,0 L325,0 Q340,0 340,15 L340,35 L0,35 Z" fill="#e3f2fd" />
+            <text x="170" y="22" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack (内存栈)</text>
+
+            <!-- Group 1: Scalar & Simple Reference -->
+            <!-- x: i32 -->
+            <g transform="translate(60, 55)">
+                <text x="0" y="-8" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#666666">x: i32</text>
+                <rect width="220" height="36" rx="4" fill="#fafafa" stroke="#cfd8dc" stroke-width="1" />
+                <text x="210" y="23" font-family="JetBrains Mono, monospace" font-size="13" fill="#333333" text-anchor="end">42</text>
+            </g>
+
+            <!-- r1: &i32 -->
+            <g transform="translate(60, 115)">
+                <text x="0" y="-8" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#666666">r1: &amp;i32 (基础引用)</text>
+                <rect width="220" height="36" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="1.5" />
+                <text x="12" y="22" font-family="JetBrains Mono, monospace" font-size="10" fill="#f57c00">ptr:</text>
+                <text x="210" y="23" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#f57c00" text-anchor="end">指向 x 的地址</text>
+                <circle cx="212" cy="18" r="3" fill="#ff9800" />
+            </g>
+
+            <!-- Separator Line (Optional but adds structure) -->
+            <line x1="40" y1="180" x2="300" y2="180" stroke="#eeeeee" stroke-width="1" stroke-dasharray="4 4" />
+
+            <!-- Group 2: Heap Owner & Fat Pointer -->
+            <!-- arr: Vec<i32> -->
+            <g transform="translate(60, 210)">
+                <text x="0" y="-8" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#666666">arr: Vec&lt;i32&gt; (所有者)</text>
+                <rect width="220" height="80" rx="8" fill="#ffffff" stroke="#2196f3" stroke-width="1.5" />
+                
+                <rect x="6" y="6" width="208" height="22" rx="2" fill="#e3f2fd" />
+                <text x="12" y="21" font-family="JetBrains Mono, monospace" font-size="10" fill="#1976d2">ptr:</text>
+                <text x="204" y="21" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#1976d2" text-anchor="end">0x5000</text>
+                
+                <rect x="6" y="32" width="208" height="20" rx="2" fill="#fafafa" stroke="#e0e0e0" />
+                <text x="12" y="46" font-family="JetBrains Mono, monospace" font-size="9" fill="#666666">len:</text>
+                <text x="204" y="46" font-family="JetBrains Mono, monospace" font-size="10" fill="#333333" text-anchor="end">3</text>
+                
+                <rect x="6" y="54" width="208" height="20" rx="2" fill="#fafafa" stroke="#e0e0e0" />
+                <text x="12" y="68" font-family="JetBrains Mono, monospace" font-size="9" fill="#666666">cap:</text>
+                <text x="204" y="68" font-family="JetBrains Mono, monospace" font-size="10" fill="#333333" text-anchor="end">3</text>
+                
+                <circle cx="212" cy="17" r="3" fill="#2196f3" />
+            </g>
+
+            <!-- r2: &[i32] (Fat Pointer) -->
+            <g transform="translate(60, 320)">
+                <text x="0" y="-8" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#666666">r2: &amp;[i32] (切片引用/胖指针)</text>
+                <rect width="220" height="60" rx="8" fill="#ffffff" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="4 2" />
+                
+                <rect x="6" y="6" width="208" height="24" rx="4" fill="#fff8e1" stroke="#ffe082" />
+                <text x="12" y="22" font-family="JetBrains Mono, monospace" font-size="10" fill="#e65100">ptr:</text>
+                <text x="204" y="22" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#e65100" text-anchor="end">0x5000</text>
+                
+                <rect x="6" y="34" width="208" height="20" rx="4" fill="#f5f5f5" stroke="#e0e0e0" />
+                <text x="12" y="48" font-family="JetBrains Mono, monospace" font-size="10" fill="#757575">len:</text>
+                <text x="204" y="48" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#757575" text-anchor="end">3</text>
+
+                <circle cx="212" cy="18" r="3" fill="#ff9800" />
+            </g>
+        </g>
+
+        <!-- Heap Section (Right) -->
+        <g transform="translate(380, 0)">
+            <rect width="340" height="440" rx="15" fill="#ffffff" stroke="#e0e0e0" stroke-width="1.5" filter="url(#dropShadow)" />
+            <path d="M0,15 Q0,0 15,0 L325,0 Q340,0 340,15 L340,35 L0,35 Z" fill="#e8f5e9" />
+            <text x="170" y="22" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32" text-anchor="middle">Heap (堆内存)</text>
+
+            <!-- Array Data (Aligned with arr) -->
+            <g transform="translate(50, 210)">
+                <text x="0" y="-15" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#666666">堆数据: [10, 20, 30]</text>
+                <g>
+                    <rect width="80" height="60" rx="6" fill="#ffffff" stroke="#4caf50" stroke-width="2.5" />
+                    <text x="40" y="38" font-family="JetBrains Mono, monospace" font-size="18" font-weight="bold" fill="#333333" text-anchor="middle">10</text>
+                    <text x="40" y="78" font-family="JetBrains Mono, monospace" font-size="10" fill="#90a4ae" text-anchor="middle">0x5000</text>
+                </g>
+                <g transform="translate(80, 0)">
+                    <rect width="80" height="60" rx="6" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" />
+                    <text x="40" y="38" font-family="JetBrains Mono, monospace" font-size="18" fill="#333333" text-anchor="middle">20</text>
+                </g>
+                <g transform="translate(160, 0)">
+                    <rect width="80" height="60" rx="6" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" />
+                    <text x="40" y="38" font-family="JetBrains Mono, monospace" font-size="18" fill="#333333" text-anchor="middle">30</text>
+                </g>
+                
+                <path d="M 0,95 L 240,95" stroke="#cfd8dc" stroke-width="1" stroke-dasharray="2 2" />
+                <text x="120" y="110" font-family="JetBrains Mono, monospace" font-size="10" fill="#90a4ae" text-anchor="middle">由 Vec&lt;i32&gt; 分配</text>
+            </g>
+        </g>
+    </g>
+
+    <!-- Connections (Bezier Curves) -->
+    <!-- r1 -> x -->
+    <!-- r1 anchor: (40+60+212, 80+115+18) = (312, 213) -->
+    <!-- x target: (40+60+210, 80+55+18) = (310, 153) -->
+    <path d="M 312,213 C 365,213 365,153 318,153" fill="none" stroke="#ff9800" stroke-width="1.5" marker-end="url(#arrow-orange)" />
+
+    <!-- arr -> Heap (Ownership) -->
+    <!-- arr anchor: (40+60+212, 80+210+17) = (312, 307) -->
+    <!-- heap target: (40+380+50, 80+210+30) = (470, 320) -->
+    <path d="M 312,307 C 380,307 410,320 460,320" fill="none" stroke="#2196f3" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arrow-blue)" />
+
+    <!-- r2 -> Heap (Reference) -->
+    <!-- r2 anchor: (40+60+212, 80+320+18) = (312, 418) -->
+    <!-- heap target: (40+380+50, 80+210+30) = (470, 320) -->
+    <path d="M 312,418 C 400,418 430,320 460,320" fill="none" stroke="#ff9800" stroke-width="2" marker-end="url(#arrow-orange)" />
+
+</svg>

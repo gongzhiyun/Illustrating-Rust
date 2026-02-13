@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<defs>
+<marker id="arrow-shared" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" fill="#4caf50" />
+</marker>
+<marker id="arrow-mut" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" fill="#f44336" />
+</marker>
+</defs>
+<rect width="800" height="450" fill="#f8f9fa" />
+<text x="400" y="30" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333" text-anchor="middle">借用规则：共享与独占的冲突检查</text>
+<g transform="translate(100, 80)">
+<rect width="250" height="150" rx="12" fill="#ffffff" stroke="#e0e0e0" />
+<text x="125" y="-10" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32" text-anchor="middle">场景 A：合法共享 (Shared OK)</text>
+<rect x="75" y="50" width="100" height="50" rx="8" fill="#e8f5e9" stroke="#4caf50" />
+<text x="125" y="80" font-family="JetBrains Mono, monospace" font-size="12" fill="#2e7d32" text-anchor="middle">Data: 100</text>
+<path d="M30 40 L65 60" fill="none" stroke="#4caf50" stroke-width="2" marker-end="url(#arrow-shared)" />
+<text x="20" y="35" font-family="JetBrains Mono, monospace" font-size="10" fill="#2e7d32">Reader 1 (&amp;T)</text>
+<path d="M30 110 L65 90" fill="none" stroke="#4caf50" stroke-width="2" marker-end="url(#arrow-shared)" />
+<text x="20" y="125" font-family="JetBrains Mono, monospace" font-size="10" fill="#2e7d32">Reader 2 (&amp;T)</text>
+<text x="125" y="130" font-family="JetBrains Mono, monospace" font-size="10" fill="#4caf50" text-anchor="middle">✅ 允许多个只读引用</text>
+</g>
+<g transform="translate(450, 80)">
+<rect width="250" height="150" rx="12" fill="#ffffff" stroke="#e0e0e0" />
+<text x="125" y="-10" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#d32f2f" text-anchor="middle">场景 B：合法独占 (Exclusive OK)</text>
+<rect x="75" y="50" width="100" height="50" rx="8" fill="#ffebee" stroke="#f44336" />
+<text x="125" y="80" font-family="JetBrains Mono, monospace" font-size="12" fill="#d32f2f" text-anchor="middle">Data: 100</text>
+<path d="M30 75 L65 75" fill="none" stroke="#f44336" stroke-width="2" marker-end="url(#arrow-mut)" />
+<text x="10" y="70" font-family="JetBrains Mono, monospace" font-size="10" fill="#d32f2f">Writer (&amp;mut T)</text>
+<text x="125" y="130" font-family="JetBrains Mono, monospace" font-size="10" fill="#f44336" text-anchor="middle">✅ 允许唯一可变引用</text>
+</g>
+<g transform="translate(250, 270)">
+<rect width="300" height="150" rx="12" fill="#ffffff" stroke="#f44336" stroke-width="2" stroke-dasharray="8 4" />
+<text x="150" y="-10" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#d32f2f" text-anchor="middle">场景 C：非法冲突 (Conflict!)</text>
+<rect x="100" y="50" width="100" height="50" rx="8" fill="#eeeeee" stroke="#9e9e9e" />
+<text x="150" y="80" font-family="JetBrains Mono, monospace" font-size="12" fill="#757575" text-anchor="middle">Data: ???</text>
+<path d="M40 30 L90 55" fill="none" stroke="#4caf50" stroke-width="2" marker-end="url(#arrow-shared)" />
+<text x="10" y="25" font-family="JetBrains Mono, monospace" font-size="10" fill="#2e7d32">Reader (&amp;T)</text>
+<path d="M40 120 L90 95" fill="none" stroke="#f44336" stroke-width="2" marker-end="url(#arrow-mut)" />
+<text x="10" y="135" font-family="JetBrains Mono, monospace" font-size="10" fill="#d32f2f">Writer (&amp;mut T)</text>
+<line x1="120" y1="40" x2="180" y2="110" stroke="#f44336" stroke-width="5" />
+<line x1="180" y1="40" x2="120" y2="110" stroke="#f44336" stroke-width="5" />
+<text x="150" y="135" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#d32f2f" text-anchor="middle">❌ 编译错误：Aliasing XOR Mutability</text>
+</g>
+</svg>
